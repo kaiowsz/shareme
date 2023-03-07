@@ -36,6 +36,8 @@ const Feed = () => {
     return <Spinner message="We are adding new ideas to your feed!" />
   }
 
+  console.log(pins)
+
   return (
     <div>
       {pins && <MasonryLayout pins={pins} />}

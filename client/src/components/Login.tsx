@@ -16,12 +16,12 @@ const Login = () => {
 
     localStorage.setItem("user", JSON.stringify(user))
     
-    const {_id, image, userName} = user
+    const {_id, image, username} = user
 
     const doc = {
       _id,
       _type: "user",
-      username: userName,
+      username,
       image,
     }
 

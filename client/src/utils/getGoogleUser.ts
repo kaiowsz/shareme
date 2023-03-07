@@ -8,7 +8,7 @@ export const createOrGetUser = async (response: any) => {
 
     const user = {
         _id: sub,
-        userName: name,
+        username: name,
         image: picture,
     }
 
