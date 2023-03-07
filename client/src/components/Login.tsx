@@ -6,19 +6,31 @@ import { FcGoogle } from "react-icons/fc"
 import shareWallpaper from "../assets/share.mp4"
 import logo from "../assets/logowhite.png" 
 import { createOrGetUser } from '../utils/getGoogleUser'
+import { client } from '../utils/client'
 
 const Login = () => {
+  const navigate = useNavigate()
 
   const handleGoogleResponse = async (response: any) => {
     const user = await createOrGetUser(response)
-  
+
+    localStorage.setItem("user", JSON.stringify(user))
+    
     const {_id, image, userName} = user
 
     const doc = {
       _id,
       _type: "user",
-      userName,
+      username: userName,
       image,
+    }
+
+    try {
+      await client.createIfNotExists(doc)
+        .then(() => navigate("/", {replace: true}))
+        
+    } catch (error) {
+      console.log(error)
     }
   }
 
