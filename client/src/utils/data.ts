@@ -6,21 +6,21 @@ export const userQuery = (userId: string) => {
 
 export const searchQuery = (searchTerm: string) => {
     const query = `*[_type == "pin" && title match '${searchTerm}*' || category match '${searchTerm}*' || about match ]{
-        image {
-            asset -> {
+        image{
+            asset->{
                 url
             }
         },
         _id,
         destination,
-        postedBy -> {
+        postedBy->{
             _id,
             username,
-            image,
+            image
         },
-        save[] {
+        save[]{
             _key,
-            postedBy -> {
+            postedBy->{
                 _id,
                 username,
                 image
@@ -32,5 +32,24 @@ export const searchQuery = (searchTerm: string) => {
 }
 
 export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
-    
-}`
+    image{
+        asset->{
+          url
+        }
+    },
+    _id,
+    destination,
+    postedBy->{
+        _id,
+        userName,
+        image
+    },
+    save[]{
+        _key,
+        postedBy->{
+            _id,
+            userName,
+            image
+        },
+    },
+} `;

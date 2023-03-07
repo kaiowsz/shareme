@@ -7,7 +7,7 @@ import { MasonryLayout, Spinner } from "./"
 
 const Feed = () => {
   const [loading, setLoading] = useState(false)
-  const [pins, setPins] = useState(null)
+  const [pins, setPins] = useState([])
 
   const { categoryId } = useParams()
 
