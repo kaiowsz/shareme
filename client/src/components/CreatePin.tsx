@@ -7,17 +7,29 @@ import { client } from "../utils/client"
 import { Spinner } from "./"
 import { categories } from "../utils/data"
 
+interface ImageAsset {
+  extension: string;
+  url: string;
+  _id: string;
+  size: number | string;
+}
+
 const CreatePin = ({user}: any) => {
   const [title, setTitle] = useState("")
   const [about, setAbout] = useState("")
   const [destination, setDestination] = useState("")
+
   const [loading, setLoading] = useState(false)
-  const [fields, setFields] = useState(null)
-  const [category, setCategory] = useState(null)
-  const [imageAsset, setImageAsset] = useState(null)
+  const [fields, setFields] = useState<boolean | null>(null)
+  const [category, setCategory] = useState<string | null>(null)
+  const [imageAsset, setImageAsset] = useState<ImageAsset | null>(null)
+
+  // verify errors states
   const [wrongImageType, setWrongImageType] = useState(false)
+  const [sizeNotAllowed, setSizeNotAllowed] = useState(false)
 
   const navigate = useNavigate()
+  console.log(destination)
 
   const uploadImage = (e: any) => {
     const selectedFile = e.target.files[0];
@@ -26,7 +38,13 @@ const CreatePin = ({user}: any) => {
     console.log(selectedFile)
 
     if(size > 20971520) {
-      return alert("The image must be less than 20MB.")
+      setSizeNotAllowed(true)
+
+      setTimeout(() => {
+        setSizeNotAllowed(false)
+      }, 3000);
+
+      return
     } 
 
     if(type === "image/png" || type === "image/svg" || type == "image/jpeg" || type === "image/gif" || type === "image/tiff") {
@@ -36,6 +54,7 @@ const CreatePin = ({user}: any) => {
       client.assets
         .upload("image", selectedFile, {contentType: type, filename: name})
         .then((document) => {
+          console.log(document)
           setImageAsset(document)
           setLoading(false)
         })
@@ -44,11 +63,19 @@ const CreatePin = ({user}: any) => {
         })
     } else {
       setWrongImageType(true)
+      setTimeout(() => setWrongImageType(false), 3000)
     }
   }
 
   const savePin = () => {
+
+    
     if(title && about && destination && imageAsset?._id && category) {
+      
+      if(!(destination.slice(0, 4)).includes("http")) {
+        setDestination(prev => `//${prev}`)
+      }
+
       const doc = {
         _type: "pin",
         title,
@@ -69,10 +96,15 @@ const CreatePin = ({user}: any) => {
         category,
       }
 
-      client.create(doc)
-        .then(() => {
-          navigate("/")
-        })
+      try {
+        client.create(doc)
+        navigate("/")
+
+      } catch (error) {
+        console.log(error)
+        
+      }
+
     } else {
       setFields(true);
 
@@ -83,9 +115,6 @@ const CreatePin = ({user}: any) => {
 
   return (
     <div className="flex flex-col justify-center items-center mt-5 lg: h-4/5">
-      {fields && (
-        <p className="text-red-500 mb-5 text-xl transition-all duration-150 ease-in">Please fill in all the fields.</p>
-      )}
       <div className="flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5 w-full">
         <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
           <div className="flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
@@ -93,6 +122,7 @@ const CreatePin = ({user}: any) => {
               <Spinner message="" />
             )}
             {wrongImageType && <p className="text-red-500">Wrong image type</p>}
+            {sizeNotAllowed && <p className="text-red-500">The size must be less than 20MB.</p>}
             {!imageAsset ? (
               <label htmlFor="upload-image" className="cursor-pointer">
                 <div className="flex flex-col items-center justify-center h-full">
@@ -165,7 +195,7 @@ const CreatePin = ({user}: any) => {
                 </select>
               </div>
 
-              <div className="flex justify-end items-end mt-5">
+              <div className="flex justify-between items-center mt-5">
                   <button
                   type="button"
                   onClick={savePin}
@@ -173,7 +203,11 @@ const CreatePin = ({user}: any) => {
                   >
                     Save Pin
                   </button>
+                  {fields && (
+                      <p className="text-red-500 text-xl transition-all duration-150 ease-in">Please fill in all the fields.</p>
+                  )}
               </div>
+
 
             </div>
         </div>

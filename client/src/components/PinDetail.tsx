@@ -9,7 +9,7 @@ import { MasonryLayout, Spinner } from "./"
 
 const PinDetail = ({user}) => {
   const [pins, setPins] = useState(null)
-  const [pinDetail, setPinDetail] = useState(null)
+  const [pinDetail, setPinDetail] = useState([])
   const [comment, setComment] = useState("")
   const [addingComment, setAddingComment] = useState(false)
   const { pinId } = useParams()
@@ -21,7 +21,7 @@ const PinDetail = ({user}) => {
 
     client.fetch(query)
       .then((data) => {
-        console.log(data)
+        console.log(data[0])
         setPinDetail(data[0])
 
         if(data[0]) {
@@ -80,7 +80,7 @@ const PinDetail = ({user}) => {
                 <MdDownloadForOffline />
               </a>
           </div>
-          <a href={pinDetail.destination} target="_blank" rel="noreferrer">{pinDetail.destination}</a>
+          <a className="underline hover:text-gray-600 transition-all duration-200" href={`${pinDetail.destination}`} target="_blank">{pinDetail.destination}</a>
         </div>
 
         <div>
@@ -88,7 +88,7 @@ const PinDetail = ({user}) => {
           <p className="mt-3">{pinDetail.about}</p>
         </div>
 
-        <Link className="flex gap-2 mt-5 items-center bg-white rounded-lg" to={`user-profile/${pinDetail.postedBy?._id}`}>
+        <Link className="flex gap-2 mt-5 items-center bg-white rounded-lg" to={`/user-profile/${pinDetail.postedBy?._id}`}>
         <img className="w-8 h-8 rounded-full object-cover" src={pinDetail.postedBy?.image} alt="user-profile" />
         <p className="font-semibold capitalize">{pinDetail.postedBy?.username}</p>
         </Link>
@@ -107,7 +107,7 @@ const PinDetail = ({user}) => {
         </div>
 
         <div className="flex flex-wrap mt-6 gap-3">
-          <Link className="" to={`user-profile/${pinDetail.postedBy?._id}`}>
+          <Link className="" to={`/user-profile/${pinDetail.postedBy?._id}`}>
           <img className="w-10 h-10 rounded-full cursor-pointer" src={pinDetail.postedBy?.image} alt="user-profile" />
           </Link>
           <input 
@@ -132,7 +132,7 @@ const PinDetail = ({user}) => {
         <MasonryLayout pins={pins}  />
       </>
     ) : (
-      <Spinner message="Loading more pins..." />
+      <h1 className="mt-10 text-center">Similar pins not found.</h1>
     )}
     </>
   )

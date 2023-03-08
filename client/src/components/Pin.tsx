@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { urlFor, client } from "../utils/client"
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
 import { MdDownloadForOffline } from "react-icons/md"
 import { AiTwotoneDelete } from "react-icons/ai"
@@ -36,9 +36,9 @@ const Pin = ({pin}: PinProps) => {
 
   const alreadySaved = (save?.filter((item: any) => item.postedBy._id === user._id))?.length
 
-  console.log(pin)
-
-  const savePin = (id: string) => {
+  const savePin = (e: any, id: string) => {
+    e.preventDefault();
+    
     if(!alreadySaved) {
 
       client
@@ -93,13 +93,17 @@ const Pin = ({pin}: PinProps) => {
               {alreadySaved ? (
                 <button 
                 type="button"
+                onClick={e => {
+                  e.stopPropagation() 
+                  e.preventDefault()
+                }}
                 className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 > {save?.length} Saved</button>
               ): (
                 <button
                 onClick={e => {
                   e.stopPropagation()
-                  savePin(_id);
+                  savePin(e, _id);
                 }}
                 type="button"
                 className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
