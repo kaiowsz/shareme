@@ -38,8 +38,6 @@ const Feed = () => {
 
   if(!pins?.length) return <h2>No pins available.</h2>
 
-  console.log(pins)
-
   return (
     <div>
       {pins && <MasonryLayout pins={pins} />}

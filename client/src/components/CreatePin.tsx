@@ -29,13 +29,10 @@ const CreatePin = ({user}: any) => {
   const [sizeNotAllowed, setSizeNotAllowed] = useState(false)
 
   const navigate = useNavigate()
-  console.log(destination)
 
   const uploadImage = (e: any) => {
     const selectedFile = e.target.files[0];
     const { type, size, name } = selectedFile
-
-    console.log(selectedFile)
 
     if(size > 20971520) {
       setSizeNotAllowed(true)
@@ -54,7 +51,6 @@ const CreatePin = ({user}: any) => {
       client.assets
         .upload("image", selectedFile, {contentType: type, filename: name})
         .then((document) => {
-          console.log(document)
           setImageAsset(document)
           setLoading(false)
         })

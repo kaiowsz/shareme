@@ -65,8 +65,6 @@ const PinDetail = ({user}: PropsPinDetail) => {
   const [addingComment, setAddingComment] = useState(false)
   const { pinId } = useParams()
 
-  console.log(pins)
-
   const fetchPinDetails = () => {
     let query = pinDetailQuery(pinId)
 
@@ -97,7 +95,8 @@ const PinDetail = ({user}: PropsPinDetail) => {
         postedBy: {
           _type: "postedBy",
           _ref: user._id,
-        }}])
+        }
+      }])
         .commit()
         .then(() => {
           fetchPinDetails();
@@ -160,7 +159,7 @@ const PinDetail = ({user}: PropsPinDetail) => {
 
         <div className="flex flex-wrap mt-6 gap-3">
           <Link className="" to={`/user-profile/${pinDetail.postedBy?._id}`}>
-          <img className="w-10 h-10 rounded-full cursor-pointer" src={pinDetail.postedBy?.image} alt="user-profile" />
+          <img className="w-10 h-10 rounded-full cursor-pointer" src={user.image} alt="user-profile" />
           </Link>
           <input 
           className="flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
