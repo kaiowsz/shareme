@@ -57,26 +57,26 @@ export const userQuery = (userId: string) => {
 }
 
 export const searchQuery = (searchTerm: string) => {
-    const query = `*[_type == "pin" && title match '${searchTerm}*' || category match '${searchTerm}*' || about match ]{
+    const query = `*[_type == "pin" && title match '${searchTerm}*' || category match '${searchTerm}*']{
         image{
-            asset->{
-                url
-            }
+          asset->{
+            url
+          }
         },
         _id,
         destination,
         postedBy->{
-            _id,
-            username,
-            image
+          _id,
+          username,
+          image
         },
         save[]{
-            _key,
-            postedBy->{
-                _id,
-                username,
-                image
-            },
+          _key,
+          postedBy->{
+              _id,
+              username,
+              image
+          },
         },
     }`
 
