@@ -52,20 +52,18 @@ const PinDetail = ({user}) => {
           setComment("")
           setAddingComment(false)
         })
-
   }
 
   useEffect(() => {
     fetchPinDetails()
   }, [pinId])
 
-  
-
   if(!pinDetail) {
     return <Spinner message="Loading pin..." />
   }
 
   return (
+    <>
     <section className="rounded-[32px] flex xl-flex-row flex-col m-auto bg-white max-w-[1500px]">
       <div className="flex justify-center items-center md:items-start flex-initial">
         <img src={pinDetail?.image && urlFor(pinDetail.image).url()} alt="user-post" className="rounded-t-3xl rounded-b-lg" />
@@ -126,9 +124,17 @@ const PinDetail = ({user}) => {
             {addingComment ? "Posting the comment..." : "Post"}
           </button>
         </div>
-
       </div>
     </section>
+    {pins?.length > 0 ? (
+      <>
+        <h2 className="text-center font-bold text-2xl mt-8 mb-4">More like this</h2>
+        <MasonryLayout pins={pins}  />
+      </>
+    ) : (
+      <Spinner message="Loading more pins..." />
+    )}
+    </>
   )
 }
 
