@@ -10,10 +10,11 @@ const isNotActiveStyle = "flex items-center px-5 gap-3 text-gray-500 hover:text-
 const isActiveStyle = "flex items-center px-5 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize"
 
 import { categories } from '../utils/data'
+import { User } from './PinDetail'
 
 
 interface SidebarProps {
-  user: [];
+  user: User;
   closeToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
  

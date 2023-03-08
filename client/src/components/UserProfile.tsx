@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, ElementType } from "react"
 import { AiOutlineLogout } from "react-icons/ai"
 import { useParams, useNavigate } from "react-router-dom"
 import { googleLogout } from "@react-oauth/google"
@@ -8,21 +8,24 @@ import { client } from "../utils/client"
 import { MasonryLayout, Spinner } from "./"
 import { FcGoogle } from "react-icons/fc"
 import { MdLogout } from "react-icons/md"
+import { User, PinType } from "./PinDetail"
 
 const activeBtnStyles = "bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none"
 const notActiveBtnStyles = "bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none"
 
 
+
+
 const UserProfile = () => {
-  const [user, setUser] = useState(null)
-  const [pins, setPins] = useState(null)
+  const [user, setUser] = useState<User>()
+  const [pins, setPins] = useState<PinType[]>([])
   const [text, setText] = useState("Created")
   const [activeBtn, setActiveBtn] = useState("created")
   const navigate = useNavigate()
   const { userId } = useParams()
 
   useEffect(() => {
-    const query = userQuery(userId);
+    const query = userQuery(`${userId}`);
 
     client.fetch(query)
       .then((data) => {
@@ -79,7 +82,7 @@ const UserProfile = () => {
           <div className="text-center mb-7">
             <button
             type="button"
-            onClick={e => {
+            onClick={(e: any) => {
               setText(e.target.textContent)
               setActiveBtn("created")
             }}
@@ -89,7 +92,7 @@ const UserProfile = () => {
             </button>
             <button
             type="button"
-            onClick={e => {
+            onClick={(e: any) => {
               setText(e.target.textContent)
               setActiveBtn("saved")
             }}

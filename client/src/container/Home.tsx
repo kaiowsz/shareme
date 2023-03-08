@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useEffect, useState, useRef } from "react"
 import { HiMenu } from "react-icons/hi"
 import { AiFillCloseCircle } from "react-icons/ai"
@@ -9,11 +11,12 @@ import { client } from "../utils/client"
 import logo from "../assets/logo.png"
 import { userQuery } from "../utils/data"
 import { fetchUser } from "../utils/fetchUser"
+import { User } from "../components/PinDetail"
 
 const Home = () => {
 
   const [toggleSidebar, setToggleSidebar] = useState(false)
-  const [user, setUser] = useState<any[]>([])
+  const [user, setUser] = useState<User>([])
   const scrollRef = useRef(null)
 
   const userInfo = fetchUser()
@@ -29,7 +32,7 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    scrollRef.current.scrollTo(0, 0)
+    scrollRef?.current?.scrollTo(0, 0)
   }, [])
 
   return (

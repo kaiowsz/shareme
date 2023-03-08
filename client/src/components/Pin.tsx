@@ -7,24 +7,11 @@ import { AiTwotoneDelete } from "react-icons/ai"
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs"
 import { fetchUser } from "../utils/fetchUser";
 
-type MyPin = {
-  postedBy: {
-    image: string;
-    username: string;
-    _id: string;
-  };
-  image: {
-    asset: {
-      url: string;
-    }
-  };
-  _id: string;
-  destination: string;
-  save: any;
-}
+import { PinType } from "./PinDetail";
 
 interface PinProps {
-  pin: MyPin;
+  pin: PinType;
+  className: string;
 }
 
 const Pin = ({pin}: PinProps) => {

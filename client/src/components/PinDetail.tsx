@@ -5,14 +5,67 @@ import { v4 as uuidv4 } from "uuid"
 
 import { client, urlFor } from '../utils/client'
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data'
-import { MasonryLayout, Spinner } from "./" 
+import { MasonryLayout, Spinner } from "./"
 
-const PinDetail = ({user}) => {
-  const [pins, setPins] = useState(null)
-  const [pinDetail, setPinDetail] = useState([])
+export type User = {
+  image: string;
+  username: string;
+  _createdAt?: string;
+  _id: string;
+}
+
+type PostedBy = {
+  image: string;
+  username: string;
+  _id: string;
+}
+
+interface PinDetail {
+  about: string;
+  category: string;
+  comments?: Comment[];
+  destination: string;
+  image: {
+    asset: {
+      url: string;
+    }
+  };
+  postedBy: PostedBy;
+  title: string;
+  _id: string;
+}
+
+interface Comment {
+  comment: string;
+  postedBy: PostedBy;
+  _key: string;
+}
+
+interface PropsPinDetail {
+  user: User;
+}
+
+export type PinType = {
+  destination: string;
+  image: {
+    asset: {
+      url: string;
+    }
+  };
+  postedBy: PostedBy;
+  save: any;
+  _id: string;
+}
+
+
+const PinDetail = ({user}: PropsPinDetail) => {
+  const [pins, setPins] = useState<PinType[] | null>(null)
+  const [pinDetail, setPinDetail] = useState<PinDetail | null>(null)
   const [comment, setComment] = useState("")
   const [addingComment, setAddingComment] = useState(false)
   const { pinId } = useParams()
+
+  console.log(pins)
 
   const fetchPinDetails = () => {
     let query = pinDetailQuery(pinId)
@@ -21,7 +74,6 @@ const PinDetail = ({user}) => {
 
     client.fetch(query)
       .then((data) => {
-        console.log(data[0])
         setPinDetail(data[0])
 
         if(data[0]) {
@@ -37,7 +89,7 @@ const PinDetail = ({user}) => {
     if(comment.trim() === "" || !comment) return
 
     setAddingComment(true)
-    client.patch(pinId)
+    client.patch(`${pinId}`)
       .setIfMissing({comments: []})
       .insert("after", "comments[-1]", [
         {comment,
@@ -126,7 +178,7 @@ const PinDetail = ({user}) => {
         </div>
       </div>
     </section>
-    {pins?.length > 0 ? (
+    {pins && pins.length > 0 ? (
       <>
         <h2 className="text-center font-bold text-2xl mt-8 mb-4">More like this</h2>
         <MasonryLayout pins={pins}  />

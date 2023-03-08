@@ -1,8 +1,15 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { IoMdAdd, IoMdSearch } from "react-icons/io"
+import { User } from './PinDetail';
 
-const Navbar = ({searchTerm, setSearchTerm, user}) => {
+interface NavbarProps {
+  user: User;
+  searchTerm: string;
+  setSearchTerm: Function;
+}
+
+const Navbar = ({searchTerm, setSearchTerm, user}: NavbarProps) => {
   const navigate = useNavigate();
 
   if(!user) {

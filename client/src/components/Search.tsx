@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react"
 
+import { PinType } from "./PinDetail"
 import { MasonryLayout, Spinner } from "./"
 import { client } from "../utils/client"
 import { feedQuery, searchQuery } from "../utils/data"
 
-const Search = ({searchTerm, setSearchTerm}: any) => {
+interface SearchProps {
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  const [pins, setPins] = useState(null)
+const Search = ({searchTerm, setSearchTerm}: SearchProps) => {
+
+  const [pins, setPins] = useState<PinType[]>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
