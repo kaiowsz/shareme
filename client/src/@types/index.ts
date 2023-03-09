@@ -23,7 +23,7 @@ export type PostedBy = {
     _id: string;
 }
   
-export interface PinDetail {
+export interface PinDetails {
     about: string;
     category: string;
     comments?: Comment[];
