@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import React, { useState, useEffect } from "react"
+import { Navigate, Outlet } from "react-router-dom"
 
 const PrivateRoutes = () => {
     const [user, setUser] = useState<any>([])
