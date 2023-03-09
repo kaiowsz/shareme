@@ -8,7 +8,7 @@ import { client } from "../utils/client"
 import { MasonryLayout, Spinner } from "./"
 import { FcGoogle } from "react-icons/fc"
 import { MdLogout } from "react-icons/md"
-import { User, PinType } from "./PinDetail"
+import { User, PinType } from "../@types"
 
 const activeBtnStyles = "bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none"
 const notActiveBtnStyles = "bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none"

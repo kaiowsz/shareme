@@ -7,7 +7,7 @@ import { AiTwotoneDelete } from "react-icons/ai"
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs"
 import { fetchUser } from "../utils/fetchUser";
 
-import { PinType } from "./PinDetail";
+import { PinType } from "../@types";
 
 interface PinProps {
   pin: PinType;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import { PinType } from "./PinDetail"
+import { PinType } from "../@types"
 import { MasonryLayout, Spinner } from "./"
 import { client } from "../utils/client"
 import { feedQuery, searchQuery } from "../utils/data"

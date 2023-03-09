@@ -7,56 +7,11 @@ import { client, urlFor } from '../utils/client'
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data'
 import { MasonryLayout, Spinner } from "./"
 
-export type User = {
-  image: string;
-  username: string;
-  _createdAt?: string;
-  _id: string;
-}
-
-type PostedBy = {
-  image: string;
-  username: string;
-  _id: string;
-}
-
-interface PinDetail {
-  about: string;
-  category: string;
-  comments?: Comment[];
-  destination: string;
-  image: {
-    asset: {
-      url: string;
-    }
-  };
-  postedBy: PostedBy;
-  title: string;
-  _id: string;
-}
-
-interface Comment {
-  comment: string;
-  postedBy: PostedBy;
-  _key: string;
-}
+import { User, PinDetail, Comment, PinType, PostedBy } from '../@types'
 
 interface PropsPinDetail {
   user: User;
 }
-
-export type PinType = {
-  destination: string;
-  image: {
-    asset: {
-      url: string;
-    }
-  };
-  postedBy: PostedBy;
-  save: any;
-  _id: string;
-}
-
 
 const PinDetail = ({user}: PropsPinDetail) => {
   const [pins, setPins] = useState<PinType[] | null>(null)

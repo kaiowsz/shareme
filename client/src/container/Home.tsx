@@ -11,7 +11,7 @@ import { client } from "../utils/client"
 import logo from "../assets/logo.png"
 import { userQuery } from "../utils/data"
 import { fetchUser } from "../utils/fetchUser"
-import { User } from "../components/PinDetail"
+import { User } from "../@types"
 
 const Home = () => {
 

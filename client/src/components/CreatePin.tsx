@@ -6,13 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { client } from "../utils/client"
 import { Spinner } from "./"
 import { categories } from "../utils/data"
-
-interface ImageAsset {
-  extension: string;
-  url: string;
-  _id: string;
-  size: number | string;
-}
+import { ImageAsset } from "../@types"
 
 const CreatePin = ({user}: any) => {
   const [title, setTitle] = useState("")
@@ -32,7 +26,7 @@ const CreatePin = ({user}: any) => {
 
   const uploadImage = (e: any) => {
     const selectedFile = e.target.files[0];
-    const { type, size, name } = selectedFile
+    const { type, size, name }: { type: string; size: number; name: string } = selectedFile
 
     if(size > 20971520) {
       setSizeNotAllowed(true)

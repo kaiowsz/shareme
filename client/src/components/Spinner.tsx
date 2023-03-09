@@ -1,13 +1,11 @@
 import React from 'react'
 import { ColorRing } from "react-loader-spinner"
 
-interface Spinner {
+interface SpinnerProps {
   message: string;
 }
 
-// color="#00BFFF"
-
-const Spinner = ({message}: Spinner) => {
+const Spinner = ({message}: SpinnerProps) => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
       <ColorRing height={50} width={200} wrapperClass="m-5" />
