@@ -9,6 +9,8 @@ import { MasonryLayout, Spinner } from "./"
 
 import { User, PinDetails, Comment, PinType, PostedBy } from '../@types'
 
+import { Toaster, toast } from "react-hot-toast"
+
 interface PropsPinDetail {
   user: User;
 }
@@ -56,6 +58,7 @@ const PinDetail = ({user}: PropsPinDetail) => {
         .then(() => {
           fetchPinDetails();
           setComment("")
+          toast.success("Your comment has been added!")
           setAddingComment(false)
         })
   }
@@ -71,6 +74,7 @@ const PinDetail = ({user}: PropsPinDetail) => {
   return (
     <>
     <section className="rounded-[32px] flex xl-flex-row flex-col m-auto bg-white max-w-[1500px]">
+      <div><Toaster/></div>
       <div className="flex justify-center items-center md:items-start flex-initial">
         <img src={pinDetail?.image && urlFor(pinDetail.image).url()} alt="user-post" className="rounded-t-3xl rounded-b-lg" />
       </div>

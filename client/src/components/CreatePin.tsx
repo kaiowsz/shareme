@@ -8,6 +8,8 @@ import { Spinner } from "./"
 import { categories } from "../utils/data"
 import { ImageAsset } from "../@types"
 
+import { Toaster, toast } from "react-hot-toast"
+
 const CreatePin = ({user}: any) => {
   const [title, setTitle] = useState("")
   const [about, setAbout] = useState("")
@@ -87,8 +89,19 @@ const CreatePin = ({user}: any) => {
       }
 
       try {
-        client.create(doc)
-        navigate("/")
+        // client.create(doc)
+        // navigate("/")
+        toast.promise(
+          client.create(doc), {
+            loading: "Saving...",
+            success: "Your post has been saved!",
+            error: "We couldn't save your post. Try again later."
+          }
+        ).then(() => {
+          setTimeout(() => {
+            navigate("/")
+          }, 2000);
+        })
 
       } catch (error) {
         console.log(error)
@@ -105,6 +118,7 @@ const CreatePin = ({user}: any) => {
 
   return (
     <div className="flex flex-col justify-center items-center mt-5 lg: h-4/5">
+      <div><Toaster/></div>
       <div className="flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5 w-full">
         <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
           <div className="flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">

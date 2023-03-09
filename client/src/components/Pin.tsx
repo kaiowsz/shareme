@@ -8,6 +8,7 @@ import { BsFillArrowUpRightCircleFill } from "react-icons/bs"
 import { fetchUser } from "../utils/fetchUser";
 
 import { PinType } from "../@types";
+import { Toaster, toast } from "react-hot-toast"
 
 interface PinProps {
   pin: PinType;
@@ -40,19 +41,28 @@ const Pin = ({pin}: PinProps) => {
           }
         }])
         .commit()
-        .then(() => {
-          window.location.reload();
-        })
     }
   }
 
   const deletePin = (id: string) => {
-    client
-      .delete(id)
-      .then(() => window.location.reload())
+    
+    toast.promise(
+      client.delete(id),
+      {
+        loading: "Deleting...",
+        success: "Post deleted. Please wait a few seconds.",
+        error: "Something went wrong.",
+      }
+    ).then(() => {
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000);
+    })
   }
 
   return (
+    <>
+    <div><Toaster /></div>
     <div className="m-2">
       <div 
       onMouseEnter={() => setPostHovered(true)}
@@ -131,6 +141,7 @@ const Pin = ({pin}: PinProps) => {
         <p className="font-semibold capitalize">{postedBy?.username}</p>
       </Link>
     </div>
+    </>
   )
 }
 
