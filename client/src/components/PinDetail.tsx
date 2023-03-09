@@ -7,7 +7,7 @@ import { client, urlFor } from '../utils/client'
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data'
 import { MasonryLayout, Spinner } from "./"
 
-import { User, PinDetail, Comment, PinType, PostedBy } from '../@types'
+import { User, PinDetails, Comment, PinType, PostedBy } from '../@types'
 
 interface PropsPinDetail {
   user: User;
@@ -15,7 +15,7 @@ interface PropsPinDetail {
 
 const PinDetail = ({user}: PropsPinDetail) => {
   const [pins, setPins] = useState<PinType[] | null>(null)
-  const [pinDetail, setPinDetail] = useState<PinDetail | null>(null)
+  const [pinDetail, setPinDetail] = useState<PinDetails | null>(null)
   const [comment, setComment] = useState("")
   const [addingComment, setAddingComment] = useState(false)
   const { pinId } = useParams()
