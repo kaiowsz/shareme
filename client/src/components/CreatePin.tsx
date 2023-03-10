@@ -62,7 +62,7 @@ const CreatePin = ({user}: any) => {
   const savePin = () => {
 
     
-    if(title && about && destination && imageAsset?._id && category) {
+    if(title && about && imageAsset?._id && category) {
       
       if(!(destination.slice(0, 4)).includes("http")) {
         setDestination(prev => `//${prev}`)
@@ -72,7 +72,7 @@ const CreatePin = ({user}: any) => {
         _type: "pin",
         title,
         about,
-        destination,
+        destination: destination ? destination : "",
         image: {
           _type: "image",
           asset: {
@@ -176,13 +176,14 @@ const CreatePin = ({user}: any) => {
             value={about}
             onChange={(e) => setAbout(e.target.value)}
             placeholder="What is your pin about"
+            required
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
             />
             <input 
             type="text"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
-            placeholder="Add your destination link"
+            placeholder="Add your destination link (optional)"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
             />
             <div className="flex flex-col">
