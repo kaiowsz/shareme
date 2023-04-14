@@ -1,4 +1,4 @@
-# ShareMe
+# <h1 align="center">ShareMe</h1>
 ![Homepage screenshot](https://github.com/kaiowsz/shareme/blob/main/client/public/readme.png)
 
 ### :hammer: About this project
