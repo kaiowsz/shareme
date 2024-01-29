@@ -14,6 +14,7 @@ const CreatePin = ({user}: any) => {
   const [title, setTitle] = useState("")
   const [about, setAbout] = useState("")
   const [destination, setDestination] = useState("")
+  const [isPosting, setIsPosting] = useState(false);
 
   const [loading, setLoading] = useState(false)
   const [fields, setFields] = useState<boolean | null>(null)
@@ -61,8 +62,14 @@ const CreatePin = ({user}: any) => {
 
   const savePin = () => {
 
+    setIsPosting(true);
     
-    if(title && about && imageAsset?._id && category) {
+    // function isUrl(url: string): boolean {
+    //   const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    //   return urlRegex.test(url);
+    // }
+    
+    if(imageAsset?._id && category) {
       
       if(!(destination.slice(0, 4)).includes("http")) {
         setDestination(prev => `//${prev}`)
@@ -70,8 +77,8 @@ const CreatePin = ({user}: any) => {
 
       const doc = {
         _type: "pin",
-        title,
-        about,
+        title: title ? title : "",
+        about: about ? about : "",
         destination: destination ? destination : "",
         image: {
           _type: "image",
@@ -113,6 +120,8 @@ const CreatePin = ({user}: any) => {
 
       setTimeout(() => setFields(false), 2000)
     }
+
+    setIsPosting(false);
   }
 
 
@@ -162,7 +171,7 @@ const CreatePin = ({user}: any) => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Add your title here"
+            placeholder="Title"
             className="outline-none text-2xl sm:text-3xl font-bold border-b-2 border-gray-200 p-2"
             />
             {user && (
@@ -175,7 +184,7 @@ const CreatePin = ({user}: any) => {
             type="text"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            placeholder="What is your pin about"
+            placeholder="Description"
             required
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
             />
@@ -183,19 +192,19 @@ const CreatePin = ({user}: any) => {
             type="text"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
-            placeholder="Add your destination link (optional)"
+            placeholder="URL"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
             />
             <div className="flex flex-col">
               <div>
-                <p className="mb-2 font-semibold text-lg sm:text-xl">Choose Pin Category</p>
+                <p className="mb-2 font-semibold text-lg sm:text-xl">Pin Category <span className="">*</span></p>
                 <select 
                 onChange={(e) => setCategory(e.target.value)}
                 className="outline-none w-4/5 text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
                 name="" id="">
                   <option value="other" className="bg-white">Select Category</option>
                   {categories.map((category: any) => (
-                    <option className="text-base border-0 outline-none capitalize bg-white text-black" value={category.name}>{category.name}</option>
+                    <option key={category.name} className="text-base border-0 outline-none capitalize bg-white text-black" value={category.name}>{category.name}</option>
                   ))}
                 </select>
               </div>
@@ -204,9 +213,10 @@ const CreatePin = ({user}: any) => {
                   <button
                   type="button"
                   onClick={savePin}
-                  className="bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none"
+                  className="bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none disabled:bg-opacity-50"
+                  disabled={isPosting}
                   >
-                    Save Pin
+                    {isPosting ? "Loading" : "Save Pin"}
                   </button>
                   {fields && (
                       <p className="text-red-500 text-xl transition-all duration-150 ease-in">Please fill in all the fields.</p>

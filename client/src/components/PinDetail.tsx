@@ -76,7 +76,7 @@ const PinDetail = ({user}: PropsPinDetail) => {
     <section className="rounded-[32px] flex xl-flex-row flex-col m-auto bg-white max-w-[1500px]">
       <div><Toaster/></div>
       <div className="flex justify-center items-center md:items-start flex-initial">
-        <img src={pinDetail?.image && urlFor(pinDetail.image).url()} alt="user-post" className="rounded-t-3xl rounded-b-lg" />
+        {<img src={pinDetail?.image && urlFor(pinDetail.image).url()} alt="user-post" className="rounded-t-3xl rounded-b-lg max-h-[1000px]" />}
       </div>
       <div className="w-full p-5 flex-1 xl:min-w-620">
         <div className="flex items-center justify-between">
