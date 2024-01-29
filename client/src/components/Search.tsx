@@ -16,22 +16,29 @@ const Search = ({searchTerm, setSearchTerm}: SearchProps) => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if(searchTerm) {
-      setLoading(true);
-      const query = searchQuery(searchTerm.toLowerCase())
+    const delayDebounce = setTimeout(() => {
+        if(searchTerm) {
+          setLoading(true);
+          const query = searchQuery(searchTerm.toLowerCase())
+    
+          client.fetch(query)
+            .then(data => {
+              setPins(data)
+              setLoading(false)
+            })
+        } else {
+          client.fetch(feedQuery)
+            .then(data => {
+              setPins(data)
+              setLoading(false)
+            })
+        }
 
-      client.fetch(query)
-        .then(data => {
-          setPins(data)
-          setLoading(false)
-        })
-    } else {
-      client.fetch(feedQuery)
-        .then(data => {
-          setPins(data)
-          setLoading(false)
-        })
-    }
+      }, 300)
+
+    return () => clearTimeout(delayDebounce);
+
+
   }, [searchTerm])
 
   return (
