@@ -7,7 +7,7 @@ import logo from "../assets/logo.png"
 
 const isNotActiveStyle = "flex items-center px-5 gap-3 text-gray-500 hover:text-black transition-all duration-200 ease-in-out capitalize";
 
-const isActiveStyle = "flex items-center px-5 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize"
+const isActiveStyle = "flex items-center px-5 gap-3 font-bold  border-r-2 border-black transition-all duration-200 ease-in-out capitalize text-lg"
 
 import { categories } from '../utils/data'
 import { User } from '../@types'
@@ -38,11 +38,11 @@ const Sidebar = ({user, closeToggle}: SidebarProps) => {
             <RiHomeFill />
             Home
           </NavLink>
-          <h3 className="mt-2 px-5 text-base 2xl:tex-xl">Discover categories</h3>
-          {categories.slice(0, categories.length - 1).map(category => (
+          <h3 className="mt-2 px-5 text-base 2xl:text-lg font-bold">Discover categories</h3>
+          {categories.map(category => (
             <NavLink 
               to={`/category/${category.name}`} 
-              className={({isActive}) => isActive ? isActiveStyle : isNotActiveStyle} 
+              className={({isActive}) => isActive ? `${isActiveStyle}` : `${isNotActiveStyle} hover:text-red-900`}
               onClick={handleCloseSidebar}
               key={category.name}
             >

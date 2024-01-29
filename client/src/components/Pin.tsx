@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { urlFor, client } from "../utils/client"
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
@@ -20,7 +20,7 @@ const Pin = ({pin}: PinProps) => {
   const navigate = useNavigate()
   const {postedBy, image, _id, destination, save} = pin;
 
-  const user = fetchUser()
+  const user = fetchUser();
 
   const alreadySaved = (save?.filter((item: any) => item.postedBy._id === user._id))?.length
 
